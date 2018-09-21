@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
+import { won, winRate } from '../utilities/parsing'
 
 const Form = t.form.Form
 
@@ -35,9 +36,10 @@ export default class SearchSummoner extends React.Component {
       const gameInfo = await axios.get(
                 `https://na1.api.riotgames.com/lol/match/v3/matches/${matchId}?api_key=${API_KEY}`
             )
-      console.log('Summoner data: ', summoner.data)
-      console.log('matches data: ', matches.data)
-      console.log('Game Info: ', gameInfo.data)
+            // console.log('Summoner data: ', summoner.data)
+            // console.log('matches data: ', matches.data)
+            // console.log('Game Info: ', gameInfo.data.participantIdentity)
+      console.log(won(accountId, gameInfo.data))
     } catch (error) {
       console.log(error)
     }
