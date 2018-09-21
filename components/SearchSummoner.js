@@ -24,22 +24,35 @@ export default class SearchSummoner extends React.Component {
   handleSubmit = async () => {
     const values = this._form.getValue()
     console.log('Summoner Name: ', values.summonerName)
+    let matchesInfoArr = []
     try {
+            // get accountId
       const summoner = await axios.get(
                 `https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/${values.summonerName}?api_key=${API_KEY}`
             )
+
       const accountId = summoner.data.accountId
+
+            // get Ids of last 10 ranked games
       const matches = await axios.get(
-                `https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/${accountId}?endIndex=1&api_key=${API_KEY}`
+                `https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/${accountId}?endIndex=10&api_key=${API_KEY}`
             )
-      const matchId = matches.data.matches[0].gameId
-      const gameInfo = await axios.get(
-                `https://na1.api.riotgames.com/lol/match/v3/matches/${matchId}?api_key=${API_KEY}`
-            )
-            // console.log('Summoner data: ', summoner.data)
-            // console.log('matches data: ', matches.data)
-            // console.log('Game Info: ', gameInfo.data.participantIdentity)
-      console.log(won(accountId, gameInfo.data))
+      const matchIds = []
+      matches.data.matches.forEach(match => {
+        matchIds.push(match.gameId)
+      })
+      console.log('matches --->', matchIds)
+
+            // forEach does not work with async/await
+      for (let i = 0; i < matchIds.length; i++) {
+        const matchInfo = await axios.get(
+                    `https://na1.api.riotgames.com/lol/match/v3/matches/${matchIds[i]}?api_key=${API_KEY}`
+                )
+
+        matchesInfoArr.push(matchInfo.data)
+      }
+
+      console.log(matchesInfoArr)
     } catch (error) {
       console.log(error)
     }
