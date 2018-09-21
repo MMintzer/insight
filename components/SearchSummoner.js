@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
-import { won, winRate } from '../utilities/parsing'
+import { winRate } from '../utilities/parsing'
 
 const Form = t.form.Form
 
@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
 
 export default class SearchSummoner extends React.Component {
   handleSubmit = async () => {
+    const { navigate } = this.props.navigation
+    navigate('Profile')
+
     const values = this._form.getValue()
     console.log('Summoner Name: ', values.summonerName)
     let matchesInfoArr = []
