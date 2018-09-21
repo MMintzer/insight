@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
-import { winRate } from '../utilities/parsing'
+import { winRate, saveSummonerData } from '../utilities/parsing'
+import { AsyncStorage } from 'react-native'
 
 const Form = t.form.Form
 
@@ -21,12 +22,20 @@ const styles = StyleSheet.create({
 })
 
 export default class SearchSummoner extends React.Component {
-  handleSubmit = async () => {
-    const { navigate } = this.props.navigation
-    navigate('Profile')
+  constructor (props) {
+    super(props)
+    this.state = {
+      isLoading: false
+    }
+  }
 
+  handleSubmit = async () => {
+    this.setState({
+      isLoading: true
+    })
+    const { navigate } = this.props.navigation
     const values = this._form.getValue()
-    console.log('Summoner Name: ', values.summonerName)
+    let name = values.SummonerName
     let matchesInfoArr = []
     try {
             // get accountId
@@ -44,16 +53,16 @@ export default class SearchSummoner extends React.Component {
       matches.data.matches.forEach(match => {
         matchIds.push(match.gameId)
       })
-      console.log('matches --->', matchIds)
-
-            // forEach does not work with async/await
+            // forEach does not work with async/await - Use basic for loop to get the matchInfo for each game
       for (let i = 0; i < matchIds.length; i++) {
         const matchInfo = await axios.get(
                     `https://na1.api.riotgames.com/lol/match/v3/matches/${matchIds[i]}?api_key=${API_KEY}`
                 )
         matchesInfoArr.push(matchInfo.data)
       }
-
+            // Want to cache my data at some point but for now I want to pass summonerName, accountId and matchesInforArr into summonerProfile
+      this.setState({ isLoading: false })
+      navigate('Profile', { accountId })
       console.log('Winrate = >', winRate(accountId, matchesInfoArr))
     } catch (error) {
       console.log(error)
@@ -61,6 +70,13 @@ export default class SearchSummoner extends React.Component {
   }
 
   render () {
+    if (this.state.isLoading) {
+      return (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
         <Text>Welcome to Insightful!  Enter your summoner name to gain insight!</Text>

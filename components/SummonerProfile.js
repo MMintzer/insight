@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { getSummonerData } from '../utilities/parsing'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,9 +13,10 @@ const styles = StyleSheet.create({
 
 export default class SummonerProfile extends React.Component {
   render () {
+    console.log(this.props.navigation.state.params)
     return (
       <View style={styles.container}>
-        <Text>Profile for: </Text>
+        <Text>Profile for: {this.props.navigation.state.params.name}</Text>
       </View>
     )
   }
