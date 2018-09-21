@@ -48,11 +48,10 @@ export default class SearchSummoner extends React.Component {
         const matchInfo = await axios.get(
                     `https://na1.api.riotgames.com/lol/match/v3/matches/${matchIds[i]}?api_key=${API_KEY}`
                 )
-
         matchesInfoArr.push(matchInfo.data)
       }
 
-      console.log(matchesInfoArr)
+      console.log('Winrate = >', winRate(accountId, matchesInfoArr))
     } catch (error) {
       console.log(error)
     }
