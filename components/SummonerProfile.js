@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { getSummonerData } from '../utilities/parsing'
+import { winRate, killsCounterData } from '../utilities/parsing'
+import WinRatePie from './WinRatePie'
+import KillsChart from './KillsChart'
 
 const styles = StyleSheet.create({
   container: {
@@ -13,10 +15,21 @@ const styles = StyleSheet.create({
 
 export default class SummonerProfile extends React.Component {
   render () {
-    console.log(this.props.navigation.state.params)
+    const accountId = this.props.navigation.state.params.accountId
+    const matchesInfoArr = this.props.navigation.state.params.matchesInfoArr
+    const winData = winRate(accountId, matchesInfoArr)
+    const killData = killsCounterData(accountId, matchesInfoArr)
     return (
       <View style={styles.container}>
-        <Text>Profile for: {this.props.navigation.state.params.name}</Text>
+        <Text>Profile for: {this.props.navigation.state.params.name}'s last 10 games</Text>
+        <View>
+          <Text>Wins for last 10 games </Text>
+          <WinRatePie data={winData} />
+        </View>
+        <View>
+          <Text>Kills for last 10 games </Text>
+          <KillsChart data={killData} />
+        </View>
       </View>
     )
   }

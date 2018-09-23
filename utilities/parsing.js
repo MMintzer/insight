@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import * as d3 from 'd3'
 
 export const won = (summonerId, match) => {
   let participant
@@ -34,5 +34,46 @@ export const winRate = (summonerId, matches) => {
     }
   })
 
-  return wins / matches.length
+  return [
+    {
+      winRate: 1 - wins / matches.length
+    },
+    {
+      winRate: wins / matches.length
+    }
+  ]
 }
+
+export const killsCounter = (summonerId, match) => {
+  let participant
+  let kills
+
+  match.participantIdentities.forEach(el => {
+    if (el.player.accountId === summonerId) {
+      participant = el.participantId
+    }
+  })
+
+  match.participants.forEach(el => {
+    if (el.participantId === participant) {
+      kills = el.stats.kills
+    }
+  })
+
+  return kills
+}
+
+export const killsCounterData = (summonerId, matches) => {
+  const result = []
+  matches.forEach(match => {
+    result.push(killsCounter(summonerId, match))
+  })
+
+  return result
+}
+
+export const createScaleY = (min, max, height) => {
+  return d3.scaleLinear().domain([min, max]).nice().range([height, 0])
+}
+
+export const extent = arr => {}

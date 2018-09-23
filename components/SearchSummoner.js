@@ -4,7 +4,6 @@ import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
 import { winRate, saveSummonerData } from '../utilities/parsing'
-import { AsyncStorage } from 'react-native'
 
 const Form = t.form.Form
 
@@ -35,7 +34,7 @@ export default class SearchSummoner extends React.Component {
     })
     const { navigate } = this.props.navigation
     const values = this._form.getValue()
-    let name = values.SummonerName
+    let name = values.summonerName
     let matchesInfoArr = []
     try {
             // get accountId
@@ -62,8 +61,7 @@ export default class SearchSummoner extends React.Component {
       }
             // Want to cache my data at some point but for now I want to pass summonerName, accountId and matchesInforArr into summonerProfile
       this.setState({ isLoading: false })
-      navigate('Profile', { accountId })
-      console.log('Winrate = >', winRate(accountId, matchesInfoArr))
+      navigate('Profile', { accountId, name, matchesInfoArr })
     } catch (error) {
       console.log(error)
     }
