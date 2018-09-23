@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native'
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
@@ -14,9 +14,15 @@ const SearchSummonerForm = t.struct({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
   }
 })
 
@@ -70,8 +76,8 @@ export default class SearchSummoner extends React.Component {
   render () {
     if (this.state.isLoading) {
       return (
-        <View>
-          <Text>Loading...</Text>
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size='large' color='#0000ff' />
         </View>
       )
     }

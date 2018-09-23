@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { winRate, killsCounterData } from '../utilities/parsing'
 import WinRatePie from './WinRatePie'
 import KillsChart from './KillsChart'
@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
     alignItems: 'center',
     justifyContent: 'center'
   }
@@ -20,17 +24,15 @@ export default class SummonerProfile extends React.Component {
     const winData = winRate(accountId, matchesInfoArr)
     const killData = killsCounterData(accountId, matchesInfoArr)
     return (
-      <View style={styles.container}>
+      <ScrollView>
         <Text>Profile for: {this.props.navigation.state.params.name}'s last 10 games</Text>
+        <Text>Wins for last 10 games </Text>
+        <WinRatePie data={winData} />
+        <Text>Kills for last 10 games </Text>
         <View>
-          <Text>Wins for last 10 games </Text>
-          <WinRatePie data={winData} />
-        </View>
-        <View>
-          <Text>Kills for last 10 games </Text>
           <KillsChart data={killData} />
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
