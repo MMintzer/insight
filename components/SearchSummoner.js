@@ -83,8 +83,10 @@ export default class SearchSummoner extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text>Welcome to Insightful!  Enter your summoner name to gain insight!</Text>
-        <Form ref={c => (this._form = c)} type={SearchSummonerForm} />
+        <Text style={{ textAlign: 'center', width: 300 }}>
+                    Welcome to Insightful!  Enter your summoner name to gain insight!
+                </Text>
+        <Form style={{ width: 300 }} ref={c => (this._form = c)} type={SearchSummonerForm} />
         <Button title='Find Summoner' onPress={this.handleSubmit} />
       </View>
     )

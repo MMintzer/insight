@@ -25,12 +25,23 @@ export default class SummonerProfile extends React.Component {
     const killData = killsCounterData(accountId, matchesInfoArr)
     return (
       <ScrollView>
-        <Text>Profile for: {this.props.navigation.state.params.name}'s last 10 games</Text>
-        <Text>Wins for last 10 games </Text>
-        <WinRatePie data={winData} />
-        <Text>Kills for last 10 games </Text>
-        <View>
-          <KillsChart data={killData} />
+        <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', marginTop: 75 }}>
+          <View style={{ alignSelf: 'center', textAlign: 'center' }}>
+            <Text>
+                            Profile for: {this.props.navigation.state.params.name}
+                            's last 10 games
+                        </Text>
+            <Text style={{ textAlign: 'center', alignSelf: 'center' }}>
+                            Wins for last 10 games{' '}
+            </Text>
+            <WinRatePie data={winData} />
+          </View>
+          <Text style={{ textAlign: 'center', alignSelf: 'center' }}>
+                        Kills for last 10 games{' '}
+          </Text>
+          <View style={{ width: 250, alignSelf: 'center' }}>
+            <KillsChart data={killData} />
+          </View>
         </View>
       </ScrollView>
     )
