@@ -32,10 +32,10 @@ export default class SummonerProfile extends React.Component {
       <ScrollView>
         <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', marginTop: 75 }}>
           <View style={{ alignSelf: 'center' }}>
-            <Text style={{ alignSelf: 'center', marginBottom: 25, fontWeight: 'bold' }}>
+            <Text style={{ alignSelf: 'center', fontWeight: 'bold', marginBottom: 20 }}>
                             Insight into {this.props.navigation.state.params.name}
             </Text>
-            <Text style={{ alignSelf: 'center', marginBottom: 50 }}>
+            <Text style={{ alignSelf: 'center', marginBottom: 20 }}>
                             Rank: {tier} {rank} {leaguePoints}LP
                         </Text>
             <Text style={{ textAlign: 'center', alignSelf: 'center' }}>

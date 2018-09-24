@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Button, ActivityIndicator, Image } from 'react-
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
-import { winRate, saveSummonerData } from '../utilities/parsing'
 
 const Form = t.form.Form
 
@@ -94,11 +93,14 @@ export default class SearchSummoner extends React.Component {
     return (
       <View style={styles.container}>
         <Image
-          style={{ height: 50, width: 50, marginBottom: 50 }}
+          style={{ height: 150, width: 150, marginBottom: 20 }}
           source={{ uri: 'https://png.icons8.com/color/1600/league-of-legends.png' }}
                 />
-        <Text style={{ width: 300, marginBottom: 50 }}>
-                    Welcome to Insightful!  Enter your summoner name to gain insight!
+        <Text style={{ width: 300, marginBottom: 20, textAlign: 'center' }}>
+                    Welcome to Insightful!
+                </Text>
+        <Text style={{ width: 300, marginBottom: 20, textAlign: 'center' }}>
+                    Enter a summoner name to gain insight!
                 </Text>
         <Form style={{ width: 300 }} ref={c => (this._form = c)} type={SearchSummonerForm} />
         <Button title='Find Summoner' onPress={this.handleSubmit} />
