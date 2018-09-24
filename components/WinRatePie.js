@@ -5,7 +5,7 @@ import { ART } from 'react-native'
 const { Surface, Group, Shape } = ART
 
 const colorDecider = index => {
-  return index === 0 ? '128,0,0' : '0,128,0'
+  return index === 0 ? '192, 24, 49' : '72, 144, 48'
 }
 
 export default class WinRatePie extends React.Component {

@@ -1,1 +1,1 @@
-export const API_KEY = 'RGAPI-a0703a3c-4bc7-4800-893e-c97a2aa33c09';
+export const API_KEY = 'RGAPI-28993022-9711-4935-98cd-d2687c2668d1'

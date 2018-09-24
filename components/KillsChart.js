@@ -1,12 +1,11 @@
 import React from 'react'
-import { BarChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
-import * as shape from 'd3-shape'
+import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
 import { View } from 'react-native'
 
 export default class KillsChart extends React.Component {
   render () {
     const data = this.props.data
-    const fill = 'rgb(134, 65, 244)'
+    const fill = 'rgb(37, 105, 154)'
     return (
       <View>
         <BarChart

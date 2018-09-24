@@ -23,13 +23,20 @@ export default class SummonerProfile extends React.Component {
     const matchesInfoArr = this.props.navigation.state.params.matchesInfoArr
     const winData = winRate(accountId, matchesInfoArr)
     const killData = killsCounterData(accountId, matchesInfoArr)
+    const rankData = this.props.navigation.state.params.rankData[0]
+    const tier = rankData.tier
+    const rank = rankData.rank
+    const leaguePoints = rankData.leaguePoints
+    console.log(tier, rank, leaguePoints)
     return (
       <ScrollView>
         <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', marginTop: 75 }}>
-          <View style={{ alignSelf: 'center', textAlign: 'center' }}>
-            <Text>
-                            Profile for: {this.props.navigation.state.params.name}
-                            's last 10 games
+          <View style={{ alignSelf: 'center' }}>
+            <Text style={{ alignSelf: 'center', marginBottom: 25, fontWeight: 'bold' }}>
+                            Insight into {this.props.navigation.state.params.name}
+            </Text>
+            <Text style={{ alignSelf: 'center', marginBottom: 50 }}>
+                            Rank: {tier} {rank} {leaguePoints}LP
                         </Text>
             <Text style={{ textAlign: 'center', alignSelf: 'center' }}>
                             Wins for last 10 games{' '}

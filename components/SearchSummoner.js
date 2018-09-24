@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, Button, ActivityIndicator, Image } from 'react-native'
 import t from 'tcomb-form-native'
 import axios from 'react-native-axios'
 import { API_KEY } from '../secrets'
@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 100
   },
   horizontal: {
     flexDirection: 'row',
@@ -49,6 +50,14 @@ export default class SearchSummoner extends React.Component {
             )
 
       const accountId = summoner.data.accountId
+      const otherId = summoner.data.id
+
+            // get ranking information
+      const rankInfo = await axios.get(
+                `https://na1.api.riotgames.com/lol/league/v3/positions/by-summoner/${otherId}?api_key=${API_KEY}`
+            )
+
+            // const rankData = rankInfo.data
 
             // get Ids of last 10 ranked games
       const matches = await axios.get(
@@ -66,8 +75,9 @@ export default class SearchSummoner extends React.Component {
         matchesInfoArr.push(matchInfo.data)
       }
             // Want to cache my data at some point but for now I want to pass summonerName, accountId and matchesInforArr into summonerProfile
+      rankData = rankInfo.data
       this.setState({ isLoading: false })
-      navigate('Profile', { accountId, name, matchesInfoArr })
+      navigate('Profile', { accountId, name, matchesInfoArr, rankData })
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +93,11 @@ export default class SearchSummoner extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center', width: 300 }}>
+        <Image
+          style={{ height: 50, width: 50, marginBottom: 50 }}
+          source={{ uri: 'https://png.icons8.com/color/1600/league-of-legends.png' }}
+                />
+        <Text style={{ width: 300, marginBottom: 50 }}>
                     Welcome to Insightful!  Enter your summoner name to gain insight!
                 </Text>
         <Form style={{ width: 300 }} ref={c => (this._form = c)} type={SearchSummonerForm} />
